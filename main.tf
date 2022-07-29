@@ -62,6 +62,7 @@ resource "alicloud_slb_listener" "default" {
   backend_port              = 80
   frontend_port             = 80
   protocol                  = "http"
+  bandwidth                 = 1
   acl_status      = "on"
   acl_type        = "white"
   acl_id          = alicloud_slb_acl.default.id
@@ -86,7 +87,7 @@ resource "alicloud_instance" "instance" {
   resource_group_id = "rg-aekzu73oknrj5ca"
 
   # series III
-  instance_type              = "ecs.c6.large"
+  instance_type              = "ecs.s6-c1m1.small"
   system_disk_category       = "cloud_efficiency"
   system_disk_name           = "test_foo_system_disk_name"
   system_disk_description    = "test_foo_system_disk_description"
