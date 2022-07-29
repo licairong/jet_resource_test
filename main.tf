@@ -1,5 +1,5 @@
 provider "alicloud" {
-  region = "cn-beijing"
+  region = "cn-hangzhou"
 }
 
 resource "alicloud_ecs_key_pair" "publickey" {
@@ -11,22 +11,24 @@ resource "alicloud_security_group" "group" {
   name        = "jet_tf_test_foo"
   description = "foo"
   vpc_id      = alicloud_vpc.vpc.id
+  resource_group_id = "rg-aekzu73oknrj5ca"
 }
 
 resource "alicloud_vpc" "vpc" {
   vpc_name       = "jet_first_vpc"
   cidr_block = "172.16.0.0/16"
+  resource_group_id = "rg-aekzu73oknrj5ca"
 }
 
 resource "alicloud_vswitch" "vswitch" {
   vpc_id            = alicloud_vpc.vpc.id
   cidr_block        = "172.16.0.0/24"
-  zone_id           = "cn-beijing-h"
+  zone_id           = "cn-hangzhou-k"
   vswitch_name      = "first_vswitch"
 }
 
 resource "alicloud_ecs_disk" "example" {
-  availability_zone     = "cn-beijing-h"
+  availability_zone     = "cn-hangzhou-k"
   disk_name   = "tf-test"
   description = "Hello ecs disk."
   category    = "cloud_efficiency"
@@ -34,11 +36,13 @@ resource "alicloud_ecs_disk" "example" {
   tags = {
     Name = "TerraformTest"
   }
+  resource_group_id = "rg-aekzu73oknrj5ca"
 }
 
 resource "alicloud_slb_load_balancer" "slb" {
   load_balancer_name       = "jet-test-slb-tf"
   vswitch_id = alicloud_vswitch.vswitch.id
+  resource_group_id = "rg-aekzu73oknrj5ca"
 }
 
 resource "alicloud_slb_server_group" "default" {
@@ -63,6 +67,7 @@ resource "alicloud_slb_listener" "default" {
 
 resource "alicloud_slb_acl" "default" {
   name       = "jet_test_slb_acl"
+  resource_group_id = "rg-aekzu73oknrj5ca"
   entry_list {
     entry   = "172.16.0.0/16"
     comment = "first"
@@ -73,10 +78,10 @@ resource "alicloud_slb_acl" "default" {
 resource "alicloud_instance" "instance" {
   count = var.instance_number
 
-  # cn-beijing
-  availability_zone = "cn-beijing-h"
+  availability_zone = "cn-hangzhou-k"
   security_groups   = alicloud_security_group.group.*.id
   key_name          = alicloud_ecs_key_pair.publickey.key_pair_name
+  resource_group_id = "rg-aekzu73oknrj5ca"
 
   # series III
   instance_type              = "ecs.t5-lc2m1.nano"
