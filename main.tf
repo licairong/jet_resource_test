@@ -1,5 +1,5 @@
 provider "alicloud" {
-  region = "cn-hangzhou"
+  region = "cn-beijing"
 }
 
 resource "alicloud_ecs_key_pair" "publickey" {
@@ -23,13 +23,13 @@ resource "alicloud_vpc" "vpc" {
 resource "alicloud_vswitch" "vswitch" {
   vpc_id            = alicloud_vpc.vpc.id
   cidr_block        = "172.16.0.0/24"
-  zone_id           = "cn-hangzhou-k"
+  zone_id           = "cn-beijing-b"
   vswitch_name      = "first_vswitch"
 }
 
 resource "alicloud_ecs_disk" "example" {
   count = var.instance_number
-  availability_zone     = "cn-hangzhou-k"
+  availability_zone     = "cn-beijing-b"
   disk_name   = "tf-test"
   description = "Hello ecs disk."
   category    = "cloud_efficiency"
@@ -79,7 +79,7 @@ resource "alicloud_slb_acl" "default" {
 resource "alicloud_instance" "instance" {
   count = var.instance_number
 
-  availability_zone = "cn-hangzhou-k"
+  availability_zone = "cn-beijing-b"
   security_groups   = alicloud_security_group.group.*.id
   key_name          = alicloud_ecs_key_pair.publickey.key_pair_name
   resource_group_id = "rg-aekzu73oknrj5ca"
