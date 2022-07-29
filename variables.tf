@@ -3,6 +3,6 @@ variable "instance_number" {
 }
 
 variable "instance_type" {
-  defautl = "ecs.g5.large"
+  default = "ecs.g5.large"
 }
 
