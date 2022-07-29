@@ -87,7 +87,7 @@ resource "alicloud_instance" "instance" {
   resource_group_id = "rg-aekzu73oknrj5ca"
 
   # series III
-  instance_type              = "ecs.s6-c1m1.small"
+  instance_type              = var.instance_type
   system_disk_category       = "cloud_efficiency"
   system_disk_name           = "test_foo_system_disk_name"
   system_disk_description    = "test_foo_system_disk_description"
