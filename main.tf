@@ -42,6 +42,7 @@ resource "alicloud_ecs_disk" "example" {
 
 resource "alicloud_slb_load_balancer" "slb" {
   load_balancer_name       = "jet-test-slb-tf"
+  load_balancer_spec = "slb.s2.small"
   vswitch_id = alicloud_vswitch.vswitch.id
   resource_group_id = "rg-aekzu73oknrj5ca"
 }
