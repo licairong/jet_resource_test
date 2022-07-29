@@ -28,6 +28,7 @@ resource "alicloud_vswitch" "vswitch" {
 }
 
 resource "alicloud_ecs_disk" "example" {
+  count = var.instance_number
   availability_zone     = "cn-hangzhou-k"
   disk_name   = "tf-test"
   description = "Hello ecs disk."
@@ -95,8 +96,9 @@ resource "alicloud_instance" "instance" {
 }
 
 resource "alicloud_ecs_disk_attachment" "ecs_disk_att" {
-  disk_id     = alicloud_ecs_disk.example.id
-  instance_id = alicloud_instance.instance.id
+  count = var.instance_number
+  disk_id     = alicloud_ecs_disk.example[count.index].id
+  instance_id = alicloud_instance.instance[count.index].id
 }
 
 resource "ansible_host" "middleware" {
