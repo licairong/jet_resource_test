@@ -105,7 +105,7 @@ resource "alicloud_instance" "instance" {
   image_id                   = "ubuntu_18_04_64_20G_alibase_20190624.vhd"
   instance_name              = "test_foo"
   vswitch_id                 = alicloud_vswitch.vswitch.id
-  internet_max_bandwidth_out = 0
+  internet_max_bandwidth_out = 5
 }
 
 resource "alicloud_ecs_disk_attachment" "ecs_disk_att" {
