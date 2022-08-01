@@ -14,6 +14,17 @@ resource "alicloud_security_group" "group" {
   resource_group_id = "rg-aekzu73oknrj5ca"
 }
 
+resource "alicloud_security_group_rule" "allow_all_tcp" {
+  type              = "ingress"
+  ip_protocol       = "tcp"
+  nic_type          = "intranet"
+  policy            = "accept"
+  port_range        = "1/65535"
+  priority          = 1
+  security_group_id = alicloud_security_group.group.id
+  cidr_ip           = "0.0.0.0/0"
+}
+
 resource "alicloud_vpc" "vpc" {
   vpc_name       = "jet_first_vpc"
   cidr_block = "172.16.0.0/16"
